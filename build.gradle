@@ -1,6 +1,8 @@
 apply plugin: 'war'
 apply plugin: 'jetty'
 
+sourceCompatibility = 1.7
+
 task wrapper(type: Wrapper) {
     gradleVersion = '1.6'
 }
