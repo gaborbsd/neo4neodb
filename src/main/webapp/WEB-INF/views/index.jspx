@@ -1,4 +1,5 @@
-<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns="http://www.w3.org/1999/xhtml" version="2.0">
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:c="http://java.sun.com/jsp/jstl/core" version="2.0">
     <jsp:directive.page contentType="text/html" pageEncoding="UTF-8"/>
     <jsp:output omit-xml-declaration="true"/>
     <jsp:output doctype-root-element="html" doctype-system="about:legacy-compat"/>
@@ -9,7 +10,9 @@
         <title>Neo4NeoDB</title>
     </head>
     <body>
-    <h1>Basic Neo4NeoDB</h1>
+    <h1>Neo4NeoDB2</h1>
+    <!--@elvariable id="date" type="java.util.Date"-->
+    <c:out value="${date}"/>
     </body>
     </html>
 </jsp:root>

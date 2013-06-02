@@ -1,8 +1,51 @@
 apply plugin: 'war'
 apply plugin: 'jetty'
 
-sourceCompatibility = 1.7
+sourceCompatibility = 1.8
+
+ext.slf4jVersion = '1.7.5'
+ext.springVersion = "4.0.0.M1"
+ext.logbackClassicVersion = "1.0.13"
+ext.cglibNodepVersion = "2.2.2"
+ext.servletApiVersion = "3.0.1"
+ext.jstlVersion = "1.2"
 
 task wrapper(type: Wrapper) {
     gradleVersion = '1.6'
+}
+
+repositories {
+    mavenCentral()
+    maven { url "http://repo.springsource.org/libs-snapshot" }
+    maven { url "http://repo.springsource.org/snapshot" }
+    maven { url "http://repo.springsource.org/milestone" }
+
+
+}
+
+
+configurations {
+    integrationTestCompile {
+        extendsFrom testCompile
+    }
+    integrationTestRuntime {
+        extendsFrom integrationTestCompile, testRuntime
+    }
+    ['commons-logging', 'log4j'].each { groupName -> all*.exclude group: groupName }
+}
+
+dependencies {
+
+    providedCompile "javax.servlet:javax.servlet-api:$servletApiVersion"
+
+    compile "org.springframework:spring-webmvc:$springVersion",
+            "org.springframework:spring-jdbc:$springVersion",
+            "org.slf4j:slf4j-api:$slf4jVersion",
+            "org.slf4j:log4j-over-slf4j:$slf4jVersion",
+            "org.slf4j:jul-to-slf4j:$slf4jVersion",
+            "org.slf4j:jcl-over-slf4j:$slf4jVersion",
+            "javax.servlet:jstl:$jstlVersion"
+
+    runtime "cglib:cglib-nodep:$cglibNodepVersion",
+            "ch.qos.logback:logback-classic:$logbackClassicVersion"
 }
