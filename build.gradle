@@ -4,14 +4,14 @@ apply plugin: 'jetty'
 sourceCompatibility = 1.8
 
 ext.slf4jVersion = '1.7.5'
-ext.springVersion = "4.0.0.M1"
+ext.springVersion = "3.1.1.RELEASE"
 ext.logbackClassicVersion = "1.0.13"
 ext.cglibNodepVersion = "2.2.2"
 ext.servletApiVersion = "3.0.1"
 ext.jstlVersion = "1.2"
-ext.sdNeo4jVersion = "2.2.1.RELEASE"
+ext.sdNeo4jVersion = "2.3.0.BUILD-SNAPSHOT"
 ext.neo4jVersion = "1.9.1"
-ext.sdCommons = "1.5.1.RELEASE"
+ext.sdCommons = "1.6.0.BUILD-SNAPSHOT"
 ext.hibernateValidatorVersion = "5.0.1.Final"
 
 task wrapper(type: Wrapper) {
