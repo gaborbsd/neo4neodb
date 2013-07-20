@@ -10,9 +10,11 @@
         <title>Neo4NeoDB</title>
     </head>
     <body>
-    <h1>Neo4NeoDB2</h1>
-    <!--@elvariable id="date" type="java.util.Date"-->
-    <c:out value="${date}"/>
+    <h1>Neo4NeoDB</h1>
+
+    <!--@elvariable id="observerCount" type="java.lang.Long"-->
+    <p>No of Observers: <c:out value="${observerCount}"/></p>
+
     </body>
     </html>
 </jsp:root>

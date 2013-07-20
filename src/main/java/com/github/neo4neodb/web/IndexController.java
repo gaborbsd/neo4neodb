@@ -1,7 +1,6 @@
 package com.github.neo4neodb.web;
 
 
-import com.github.neo4neodb.domain.Observer;
 import com.github.neo4neodb.repository.ObserverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,9 +17,7 @@ public class IndexController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(Model model) {
-        model.addAttribute("date", new java.util.Date());
-        Observer observer = new Observer((new java.util.Date()).toString());
-        observerRepository.save(observer);
+        model.addAttribute("observerCount", observerRepository.count());
         return "index";
     }
 

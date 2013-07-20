@@ -4,15 +4,17 @@ apply plugin: 'jetty'
 sourceCompatibility = 1.7
 
 ext.slf4jVersion = '1.7.5'
-ext.springVersion = "3.1.1.RELEASE"
+ext.springVersion = "3.2.3.RELEASE"
 ext.logbackClassicVersion = "1.0.13"
 ext.cglibNodepVersion = "2.2.2"
 ext.servletApiVersion = "3.0.1"
 ext.jstlVersion = "1.2"
 ext.sdNeo4jVersion = "2.3.0.BUILD-SNAPSHOT"
+ext.sdRestVersion = "1.1.1.BUILD-SNAPSHOT"
 ext.neo4jVersion = "1.9.1"
 ext.sdCommons = "1.6.0.BUILD-SNAPSHOT"
 ext.hibernateValidatorVersion = "5.0.1.Final"
+ext.springSecurityVersion = "3.2.0.M2"
 
 task wrapper(type: Wrapper) {
     gradleVersion = '1.6'
@@ -54,7 +56,9 @@ dependencies {
             "javax.servlet:jstl:$jstlVersion",
             "org.springframework.data:spring-data-neo4j:$sdNeo4jVersion",
             "org.springframework.data:spring-data-neo4j-rest:$sdNeo4jVersion",
+            "org.springframework.data:spring-data-rest-webmvc:$sdRestVersion",
             "org.springframework.data:spring-data-commons:$sdCommons",
+            "org.springframework.security:spring-security-config:$springSecurityVersion",
             "org.neo4j:neo4j:$neo4jVersion",
             "org.hibernate:hibernate-validator:$hibernateValidatorVersion"
 
