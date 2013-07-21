@@ -19,6 +19,20 @@ public class Observer {
     @Indexed(indexType = IndexType.FULLTEXT, indexName = "observers")
     private String name;
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public boolean isSoftDeleted() {
+        return softDeleted;
+    }
+
+    public void setSoftDeleted(boolean softDeleted) {
+        this.softDeleted = softDeleted;
+    }
+
+    private boolean softDeleted;
+
     @RelatedTo(type = "FRIENDS_WITH", direction = Direction.INCOMING)
     private Set<Observer> friends;
 
