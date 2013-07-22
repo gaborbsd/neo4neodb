@@ -20,10 +20,6 @@ public class IndexController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(Model model) {
-        Observer observer = new Observer(new Date().toString());
-        observer.setSoftDeleted(false);
-
-        observerRepository.save(observer);
         model.addAttribute("observerCount", observerRepository.count());
         return "index";
     }

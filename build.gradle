@@ -61,7 +61,8 @@ dependencies {
             "org.springframework.security:spring-security-config:$springSecurityVersion",
             "org.springframework.hateoas:spring-hateoas:0.8.0.BUILD-SNAPSHOT",
             "org.neo4j:neo4j:$neo4jVersion",
-            "org.hibernate:hibernate-validator:$hibernateValidatorVersion"
+            "org.hibernate:hibernate-validator:$hibernateValidatorVersion",
+            "org.apache.velocity:velocity:1.7"
 
     runtime "cglib:cglib-nodep:$cglibNodepVersion",
             "ch.qos.logback:logback-classic:$logbackClassicVersion"

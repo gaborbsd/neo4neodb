@@ -1,5 +1,6 @@
 package com.github.neo4neodb.config;
 
+import org.apache.velocity.app.VelocityEngine;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +11,9 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.velocity.VelocityConfig;
+import org.springframework.web.servlet.view.velocity.VelocityConfigurer;
+import org.springframework.web.servlet.view.velocity.VelocityViewResolver;
 
 @Configuration
 @EnableWebMvc
@@ -24,11 +28,18 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     public ViewResolver viewResolver() {
-
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setViewClass(JstlView.class);
-        viewResolver.setPrefix("/WEB-INF/views/");
-        viewResolver.setSuffix(".jspx");
+        VelocityViewResolver viewResolver = new VelocityViewResolver();
+        viewResolver.setCache(true);
+        viewResolver.setPrefix("");
+        viewResolver.setSuffix(".html");
+        viewResolver.setExposeSpringMacroHelpers(true);
         return viewResolver;
+    }
+
+    @Bean
+    public VelocityConfig velocityConfig(){
+       VelocityConfigurer velocityConfig = new VelocityConfigurer();
+       velocityConfig.setResourceLoaderPath("/WEB-INF/html/");
+       return velocityConfig;
     }
 }
