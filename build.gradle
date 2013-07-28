@@ -65,7 +65,8 @@ dependencies {
             "org.apache.velocity:velocity:1.7"
 
     runtime "cglib:cglib-nodep:$cglibNodepVersion",
-            "ch.qos.logback:logback-classic:$logbackClassicVersion"
+            "ch.qos.logback:logback-classic:$logbackClassicVersion",
+	    "org.codehaus.groovy:groovy:1.8.6"
 	
 
 }
