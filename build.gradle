@@ -1,5 +1,4 @@
 apply plugin: 'war'
-apply plugin: 'jetty'
 
 sourceCompatibility = 1.7
 
@@ -15,6 +14,7 @@ ext.neo4jVersion = "1.9.1"
 ext.sdCommons = "1.6.0.BUILD-SNAPSHOT"
 ext.hibernateValidatorVersion = "5.0.1.Final"
 ext.springSecurityVersion = "3.2.0.M2"
+
 
 task wrapper(type: Wrapper) {
     gradleVersion = '1.6'
@@ -66,4 +66,47 @@ dependencies {
 
     runtime "cglib:cglib-nodep:$cglibNodepVersion",
             "ch.qos.logback:logback-classic:$logbackClassicVersion"
+	
+
+}
+
+
+
+configurations { jetty9 }
+
+repositories.mavenCentral()
+
+dependencies.jetty9 'org.eclipse.jetty:jetty-ant:9.0.2.v20130417'
+ 
+ant {
+	taskdef(name: 'jettyRun', classname: 'org.eclipse.jetty.ant.JettyRunTask', classpath: configurations.jetty9.asPath)
+	taskdef(name: 'jettyStop', classname: 'org.eclipse.jetty.ant.JettyStopTask', classpath: configurations.jetty9.asPath)
+}
+ 
+project.ext {
+	contextPath = '/'
+	port = 8080
+	stopPort = stopKey = 9999
+}
+ 
+task jettyRun << {
+	ant.jettyRun(jettyPort: project.ext.port, scanIntervalSeconds: 3) {
+		webApp(war: webAppDir, contextPath: project.ext.contextPath, extraClasspath: configurations.compile.asPath)
+	}
+}
+ 
+task jettyRunWar(dependsOn: war) << {
+	ant.jettyRun(jettyPort: project.ext.port) {
+		webApp(war: war.archivePath, contextPath: project.ext.contextPath)
+	}
+}
+ 
+task jettyStart(dependsOn: war) << {
+	ant.jettyRun(daemon: true, jettyPort: project.ext.port, stopPort: project.ext.stopPort, stopKey: project.ext.stopKey) {
+		webApp(war: war.archivePath, contextPath: project.ext.contextPath)
+	}
+}
+ 
+task jettyStop << {
+	ant.jettyStop(stopWait: 1, stopPort: project.ext.stopPort, stopKey: project.ext.stopKey)
 }
