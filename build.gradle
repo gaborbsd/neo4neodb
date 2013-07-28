@@ -2,17 +2,22 @@ apply plugin: 'war'
 
 sourceCompatibility = 1.7
 
-ext.slf4jVersion = '1.7.5'
-ext.springVersion = "3.2.3.RELEASE"
-ext.logbackClassicVersion = "1.0.13"
-ext.cglibNodepVersion = "2.2.2"
-ext.servletApiVersion = "3.0.1"
-ext.sdNeo4jVersion = "2.3.0.BUILD-SNAPSHOT"
-ext.sdRestVersion = "2.0.0.BUILD-SNAPSHOT"
-ext.neo4jVersion = "1.9.1"
-ext.sdCommons = "1.6.0.BUILD-SNAPSHOT"
-ext.hibernateValidatorVersion = "5.0.1.Final"
-ext.springSecurityVersion = "3.2.0.M2"
+ext.slf4jVersion 		= '1.7.5'
+ext.logbackClassicVersion 	= '1.0.13'
+ext.cglibNodepVersion 		= '2.2.2'
+ext.servletApiVersion 		= '3.0.1'
+ext.hibernateValidatorVersion 	= '5.0.1.Final'
+ext.groovyVersion 		= '2.1.6'
+ext.velocityVersion 		= '1.7'
+
+ext.springVersion               = '3.2.3.RELEASE'
+ext.neo4jVersion                = '1.9.1'
+ext.springSecurityVersion       = '3.2.0.M2'
+
+ext.sdCommonsVersion		= '1.6.0.BUILD-SNAPSHOT'
+ext.sdNeo4jVersion 		= '2.3.0.BUILD-SNAPSHOT'
+ext.sdRestVersion 		= '2.0.0.BUILD-SNAPSHOT'
+ext.springHateoasVersion	= '0.8.0.BUILD-SNAPSHOT'
 
 
 task wrapper(type: Wrapper) {
@@ -55,16 +60,16 @@ dependencies {
             "org.springframework.data:spring-data-neo4j:$sdNeo4jVersion",
             "org.springframework.data:spring-data-neo4j-rest:$sdNeo4jVersion",
             "org.springframework.data:spring-data-rest-webmvc:$sdRestVersion",
-            "org.springframework.data:spring-data-commons:$sdCommons",
+            "org.springframework.data:spring-data-commons:$sdCommonsVersion",
             "org.springframework.security:spring-security-config:$springSecurityVersion",
-            "org.springframework.hateoas:spring-hateoas:0.8.0.BUILD-SNAPSHOT",
+            "org.springframework.hateoas:spring-hateoas:$springHateoasVersion",
             "org.neo4j:neo4j:$neo4jVersion",
             "org.hibernate:hibernate-validator:$hibernateValidatorVersion",
-            "org.apache.velocity:velocity:1.7"
+            "org.apache.velocity:velocity:$velocityVersion"
 
     runtime "cglib:cglib-nodep:$cglibNodepVersion",
             "ch.qos.logback:logback-classic:$logbackClassicVersion",
-	    "org.codehaus.groovy:groovy:1.8.6"
+	    "org.codehaus.groovy:groovy:$groovyVersion"
 	
 
 }
@@ -75,7 +80,7 @@ configurations { jetty9 }
 
 repositories.mavenCentral()
 
-dependencies.jetty9 'org.eclipse.jetty:jetty-ant:9.0.2.v20130417'
+dependencies.jetty9 'org.eclipse.jetty:jetty-ant:9.0.4.v20130625'
  
 ant {
 	taskdef(name: 'jettyRun', classname: 'org.eclipse.jetty.ant.JettyRunTask', classpath: configurations.jetty9.asPath)
