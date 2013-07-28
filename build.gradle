@@ -89,13 +89,17 @@ project.ext {
 	stopPort = stopKey = 9999
 }
  
-task jettyRun << {
+task jettyRun {
+    logging.level = LogLevel.INFO
+} << {
 	ant.jettyRun(jettyPort: project.ext.port, scanIntervalSeconds: 3) {
 		webApp(war: webAppDir, contextPath: project.ext.contextPath, extraClasspath: configurations.compile.asPath)
 	}
 }
  
-task jettyRunWar(dependsOn: war) << {
+task jettyRunWar(dependsOn: war) {
+    logging.level = LogLevel.INFO
+}<< {
 	ant.jettyRun(jettyPort: project.ext.port) {
 		webApp(war: war.archivePath, contextPath: project.ext.contextPath)
 	}
