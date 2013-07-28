@@ -7,7 +7,6 @@ ext.springVersion = "3.2.3.RELEASE"
 ext.logbackClassicVersion = "1.0.13"
 ext.cglibNodepVersion = "2.2.2"
 ext.servletApiVersion = "3.0.1"
-ext.jstlVersion = "1.2"
 ext.sdNeo4jVersion = "2.3.0.BUILD-SNAPSHOT"
 ext.sdRestVersion = "2.0.0.BUILD-SNAPSHOT"
 ext.neo4jVersion = "1.9.1"
@@ -53,7 +52,6 @@ dependencies {
             "org.slf4j:log4j-over-slf4j:$slf4jVersion",
             "org.slf4j:jul-to-slf4j:$slf4jVersion",
             "org.slf4j:jcl-over-slf4j:$slf4jVersion",
-            "javax.servlet:jstl:$jstlVersion",
             "org.springframework.data:spring-data-neo4j:$sdNeo4jVersion",
             "org.springframework.data:spring-data-neo4j-rest:$sdNeo4jVersion",
             "org.springframework.data:spring-data-rest-webmvc:$sdRestVersion",
