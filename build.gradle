@@ -19,6 +19,7 @@ ext.sdNeo4jVersion 		= '2.3.0.BUILD-SNAPSHOT'
 ext.sdRestVersion 		= '2.0.0.BUILD-SNAPSHOT'
 ext.springHateoasVersion	= '0.8.0.BUILD-SNAPSHOT'
 
+ext.junitVersion	=	'4.11'
 
 task wrapper(type: Wrapper) {
     gradleVersion = '1.6'
@@ -53,6 +54,7 @@ dependencies {
             "org.springframework:spring-jdbc:$springVersion",
             "org.springframework:spring-aspects:$springVersion",
             "org.springframework:spring-context-support:$springVersion",
+            "org.springframework:spring-test:$springVersion",
             "org.slf4j:slf4j-api:$slf4jVersion",
             "org.slf4j:log4j-over-slf4j:$slf4jVersion",
             "org.slf4j:jul-to-slf4j:$slf4jVersion",
@@ -65,7 +67,8 @@ dependencies {
             "org.springframework.hateoas:spring-hateoas:$springHateoasVersion",
             "org.neo4j:neo4j:$neo4jVersion",
             "org.hibernate:hibernate-validator:$hibernateValidatorVersion",
-            "org.apache.velocity:velocity:$velocityVersion"
+            "org.apache.velocity:velocity:$velocityVersion",
+            "junit:junit:$junitVersion"
 
     runtime "cglib:cglib-nodep:$cglibNodepVersion",
             "ch.qos.logback:logback-classic:$logbackClassicVersion",
