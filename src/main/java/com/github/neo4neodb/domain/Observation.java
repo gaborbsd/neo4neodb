@@ -24,6 +24,16 @@ public class Observation {
 	// band
 	private MagnitudeBand band;
 
+	public Observation() {
+	}
+
+	public Observation(long ra, double dec, double mag, MagnitudeBand band) {
+		this.ra = ra;
+		this.dec = dec;
+		this.mag = mag;
+		this.band = band;
+	}
+
 	public Long getId() {
 		return id;
 	}
