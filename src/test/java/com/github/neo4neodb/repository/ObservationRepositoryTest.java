@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Iterator;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,7 @@ public class ObservationRepositoryTest {
 
 	@Test
 	@Transactional
+	@Ignore
 	public void testGetSimilarEntries() {
 		boolean ok = false;
 		Iterable<Observation> results = repo.getSimilarEntries(10001, 25.4,
