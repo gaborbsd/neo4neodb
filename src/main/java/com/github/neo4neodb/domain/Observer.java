@@ -1,5 +1,8 @@
 package com.github.neo4neodb.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.neo4j.graphdb.Direction;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.neo4j.annotation.GraphId;
@@ -9,19 +12,33 @@ import org.springframework.data.neo4j.annotation.RelatedTo;
 import org.springframework.data.neo4j.annotation.RelatedToVia;
 import org.springframework.data.neo4j.support.index.IndexType;
 
-import java.util.Set;
-
 @NodeEntity
 @TypeAlias("Observer")
 public class Observer {
 	@GraphId
 	private Long id;
 
-	@Indexed(indexType = IndexType.FULLTEXT, indexName = "observers")
+	@Indexed(indexType = IndexType.UNIQUE, indexName = "observers")
 	private String name;
+	
+	// hashed by application layer
+	private String password;
+	
+	private boolean active;
+	
+	private String confirmationCode;
 
 	@RelatedToVia(type = "OBSERVED", direction = Direction.OUTGOING)
 	private Set<Observed> observations;
+	
+	Observer(String name, String password, String confirmationCode) {
+		this.name = name;
+		this.password = password;
+		this.confirmationCode = confirmationCode;
+		this.active = false;
+		this.friends = new HashSet<>();
+		this.observations = new HashSet<>();
+	}
 
 	public Observed observed(Observation o, long date) {
 		Observed observed = new Observed(this, o, date);
@@ -63,6 +80,30 @@ public class Observer {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public String getConfirmationCode() {
+		return confirmationCode;
+	}
+
+	public void setConfirmationCode(String confirmationCode) {
+		this.confirmationCode = confirmationCode;
 	}
 
 	public Set<Observer> getFriends() {
