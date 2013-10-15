@@ -12,25 +12,23 @@ public class Observation {
 	@GraphId
 	private Long id;
 
-	// right ascension (time - millis since epoch)
-	private long ra;
+	// time - millis since epoch
+	private long rightAscension;
 
-	// declination (degree)
-	private double dec;
+	// degree
+	private double declination;
 
-	// magnitude
-	private double mag;
-
-	// band
+	// luminosity
+	private double magnitude;
 	private MagnitudeBand band;
 
 	public Observation() {
 	}
 
-	public Observation(long ra, double dec, double mag, MagnitudeBand band) {
-		this.ra = ra;
-		this.dec = dec;
-		this.mag = mag;
+	public Observation(long rightAscension, double declination, double magnitude, MagnitudeBand band) {
+		this.rightAscension = rightAscension;
+		this.declination = declination;
+		this.magnitude = magnitude;
 		this.band = band;
 	}
 
@@ -42,40 +40,40 @@ public class Observation {
 		this.id = id;
 	}
 
-	public long getRa() {
-		return ra;
+	public long getRightAscension() {
+		return rightAscension;
 	}
 
-	public void setRa(long ra) {
-		this.ra = ra;
+	public void setRightAscension(long rightAscension) {
+		this.rightAscension = rightAscension;
 	}
 
-	public void setRa(Calendar c) {
-		this.ra = c.getTimeInMillis();
+	public void setRightAscension(Calendar c) {
+		this.rightAscension = c.getTimeInMillis();
 	}
 
-	public void setRa(Date d) {
-		this.ra = d.getTime();
+	public void setRightAscension(Date d) {
+		this.rightAscension = d.getTime();
 	}
 
-	public double getDec() {
-		return dec;
+	public double getDeclination() {
+		return declination;
 	}
 
-	public void setDec(double dec) {
-		this.dec = dec;
+	public void setDeclination(double declination) {
+		this.declination = declination;
 	}
 
-	public void setDec(int deg, int min, int sec, int milli) {
-		this.dec = deg + min / 60.0 + sec / 3600.0 + milli / 3600000.0;
+	public void setDeclination(int deg, int min, int sec, int milli) {
+		this.declination = deg + min / 60.0 + sec / 3600.0 + milli / 3600000.0;
 	}
 
-	public double getMag() {
-		return mag;
+	public double getMagnitude() {
+		return magnitude;
 	}
 
-	public void setMag(double mag) {
-		this.mag = mag;
+	public void setMagnitude(double magnitude) {
+		this.magnitude = magnitude;
 	}
 
 	public MagnitudeBand getBand() {
