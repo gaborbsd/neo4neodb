@@ -25,7 +25,8 @@ public class Observation {
 	public Observation() {
 	}
 
-	public Observation(long rightAscension, double declination, double magnitude, MagnitudeBand band) {
+	public Observation(long rightAscension, double declination,
+			double magnitude, MagnitudeBand band) {
 		this.rightAscension = rightAscension;
 		this.declination = declination;
 		this.magnitude = magnitude;
