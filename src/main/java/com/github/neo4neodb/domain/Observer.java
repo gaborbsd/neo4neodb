@@ -24,6 +24,8 @@ public class Observer {
 	// hashed by application layer
 	private String password;
 	
+	private String email;
+	
 	private boolean active;
 	
 	private String confirmationCode;
@@ -31,9 +33,28 @@ public class Observer {
 	@RelatedToVia(type = "OBSERVED", direction = Direction.OUTGOING)
 	private Set<Observed> observations;
 	
-	Observer(String name, String password, String confirmationCode) {
+	public boolean activate(String confirmationCode) {
+		if (confirmationCode.equals(this.confirmationCode)) {
+			this.active = true;
+			this.confirmationCode = null;
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean resetPassword(String confirmationCode, String pass) {
+		if (confirmationCode.equals(this.confirmationCode)) {
+			this.confirmationCode = null;
+			this.password = pass;
+			return true;
+		}
+		return false;
+	}
+	
+	public Observer(String name, String password, String email, String confirmationCode) {
 		this.name = name;
 		this.password = password;
+		this.email = email;
 		this.confirmationCode = confirmationCode;
 		this.active = false;
 		this.friends = new HashSet<>();
@@ -89,17 +110,17 @@ public class Observer {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public boolean isActive() {
 		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-
-	public String getConfirmationCode() {
-		return confirmationCode;
 	}
 
 	public void setConfirmationCode(String confirmationCode) {
