@@ -4,7 +4,6 @@ import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
 import com.github.neo4neodb.domain.Observation;
-import com.github.neo4neodb.domain.Observer;
 
 public interface ObservationRepository extends GraphRepository<Observation> {
 	@Query("MATCH (u:Observer)-[r:OBSERVED]->(o:Observation) "
@@ -12,14 +11,17 @@ public interface ObservationRepository extends GraphRepository<Observation> {
 			+ "AND {1} - 1 < o.dec AND o.dec < {1} + 1 "
 			+ "AND r.date > {2} - 172800000 " + "RETURN o, r.date "
 			+ "ORDER BY r.date DESC")
-	Iterable<Observation> getSimilarEntries(long ra, double dec, long date);
+	Iterable<Observation> getSimilarEntries(long rightAscension,
+			double declination, long date);
 
-	@Query("START u=node:Observer({0}), o=node:Observation({1}) "
+	@Query("MATCH u:Observer, o:Observation "
+			+ "WHERE u.id = {0} "
+			+ "AND o.id = {1} "
 			+ "CREATE (u-[:OBSERVED {date: {2}}]->o")
-	void confirmObservation(Observer u, Observation o, long date);
+	void confirmObservation(long uid, long oid, long date);
 
-	@Query("START u=node:Observer({0}) "
+	@Query("MATCH u:Observer "
+			+ "WHERE u.id = {0} "
 			+ "CREATE u-[:OBSERVED {date: {2}}]->({1}))")
-	void createNewObservation(Observer u, Observation o, long date);
-
+	void createNewObservation(long id, Observation o, long date);
 }
