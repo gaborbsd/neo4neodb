@@ -74,7 +74,7 @@ dependencies {
             "ch.qos.logback:logback-classic:$logbackClassicVersion",
 	    "org.codehaus.groovy:groovy:$groovyVersion"
 	
-
+	testCompile "org.neo4j:neo4j-kernel:$neo4jVersion:tests"
 }
 
 
