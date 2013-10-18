@@ -31,7 +31,7 @@ public class Observer {
 	private String confirmationCode;
 
 	@RelatedToVia(type = "OBSERVED", direction = Direction.OUTGOING)
-	private Set<Observed> observations;
+	private Set<Observed> observations = new HashSet<>();
 	
 	public boolean activate(String confirmationCode) {
 		if (confirmationCode.equals(this.confirmationCode)) {
