@@ -11,11 +11,11 @@ ext.groovyVersion 		= '2.1.6'
 ext.velocityVersion 		= '1.7'
 
 ext.springVersion               = '3.2.3.RELEASE'
-ext.neo4jVersion                = '1.9.1'
+ext.neo4jVersion                = '1.9.4'
 ext.springSecurityVersion       = '3.2.0.M2'
 
-ext.sdCommonsVersion		= '1.6.0.BUILD-SNAPSHOT'
-ext.sdNeo4jVersion 		= '2.3.0.BUILD-SNAPSHOT'
+ext.sdCommonsVersion		= '1.6.1.RELEASE'
+ext.sdNeo4jVersion 		= '2.4.0.BUILD-SNAPSHOT'
 ext.sdRestVersion 		= '2.0.0.BUILD-SNAPSHOT'
 ext.springHateoasVersion	= '0.8.0.BUILD-SNAPSHOT'
 
