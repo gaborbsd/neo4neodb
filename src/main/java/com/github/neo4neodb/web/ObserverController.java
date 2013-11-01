@@ -32,6 +32,7 @@ public class ObserverController {
     @ResponseBody
     public Observer observer(@PathVariable("observerId") Long observerId) {
         Observer observer = observerRepository.findOne(observerId);
+        observer.setPassword(null);
         return observer;
     }
 
@@ -39,6 +40,8 @@ public class ObserverController {
     @ResponseBody
     ResponseEntity<List<ObserverResource>> getObservers() {
         Collection<Observer> observerCollection = asCollection(observerRepository.findBySoftDeleted(false));
+        for (Observer o : observerCollection)
+        	o.setPassword("");
         List<ObserverResource> resourceList = observerResourceAssembler.toResources(observerCollection);
         return new ResponseEntity<List<ObserverResource>>(resourceList, HttpStatus.OK);
     }

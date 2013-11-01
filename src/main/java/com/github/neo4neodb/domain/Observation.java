@@ -3,14 +3,21 @@ package com.github.neo4neodb.domain;
 import java.sql.Date;
 import java.util.Calendar;
 
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.neo4j.annotation.GraphId;
+import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.springframework.data.neo4j.support.index.IndexType;
 
 @NodeEntity
+@TypeAlias("Observation")
 public class Observation {
 
 	@GraphId
 	private Long id;
+	
+	@Indexed(indexType = IndexType.UNIQUE, indexName = "observations")
+	private String observationName;
 
 	// time - millis since epoch
 	private long rightAscension;

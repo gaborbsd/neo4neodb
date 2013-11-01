@@ -9,10 +9,4 @@ import java.util.List;
 
 public interface ObserverRepository extends GraphRepository<Observer> {
     List<Observer> findBySoftDeleted(boolean isSoftDeletd);
-    
-	@Query("MATCH u:Observer "
-			+ "WHERE u.name = {0}"
-			+ "AND u.password = {1}"
-			+ "RETURN u")
-    Observer findByNameAndPassword(String name, String password);
 }
