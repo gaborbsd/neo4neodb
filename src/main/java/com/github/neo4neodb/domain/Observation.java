@@ -2,11 +2,16 @@ package com.github.neo4neodb.domain;
 
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 
+import org.neo4j.graphdb.Direction;
 import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.springframework.data.neo4j.annotation.RelatedTo;
 import org.springframework.data.neo4j.support.index.IndexType;
 
 @NodeEntity
@@ -15,7 +20,7 @@ public class Observation {
 
 	@GraphId
 	private Long id;
-	
+
 	@Indexed(indexType = IndexType.UNIQUE, indexName = "observations")
 	private String observationName;
 
@@ -28,6 +33,10 @@ public class Observation {
 	// luminosity
 	private double magnitude;
 	private MagnitudeBand band;
+
+	@Fetch
+	@RelatedTo(type = "OBSERVED", direction = Direction.INCOMING)
+	private Set<Observer> observers = new HashSet<>();
 
 	public Observation() {
 	}
@@ -90,6 +99,14 @@ public class Observation {
 
 	public void setBand(MagnitudeBand band) {
 		this.band = band;
+	}
+
+	public Set<Observer> getObservers() {
+		return observers;
+	}
+
+	public void setObservers(Set<Observer> observers) {
+		this.observers = observers;
 	}
 
 	@Override

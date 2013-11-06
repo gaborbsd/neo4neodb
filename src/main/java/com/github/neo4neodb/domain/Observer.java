@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.neo4j.graphdb.Direction;
 import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
@@ -30,8 +31,9 @@ public class Observer {
 	
 	private String confirmationCode;
 
-	@RelatedToVia(type = "OBSERVED", direction = Direction.OUTGOING)
-	private Set<Observed> observations = new HashSet<>();
+	@Fetch
+	@RelatedTo(type = "OBSERVED", direction = Direction.OUTGOING)
+	private Set<Observation> observations = new HashSet<>();
 	
 	public boolean activate(String confirmationCode) {
 		if (confirmationCode.equals(this.confirmationCode)) {
@@ -59,12 +61,6 @@ public class Observer {
 		this.active = false;
 		this.friends = new HashSet<>();
 		this.observations = new HashSet<>();
-	}
-
-	public Observed observed(Observation o, long date) {
-		Observed observed = new Observed(this, o, date);
-		this.observations.add(observed);
-		return observed;
 	}
 
 	public void setId(Long id) {
@@ -133,6 +129,14 @@ public class Observer {
 
 	public void setFriends(Set<Observer> friends) {
 		this.friends = friends;
+	}
+
+	public Set<Observation> getObservations() {
+		return observations;
+	}
+
+	public void setObservations(Set<Observation> observations) {
+		this.observations = observations;
 	}
 
 	@Override
