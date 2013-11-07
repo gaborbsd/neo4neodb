@@ -12,6 +12,7 @@ import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
+import org.springframework.data.neo4j.annotation.RelatedToVia;
 import org.springframework.data.neo4j.support.index.IndexType;
 
 @NodeEntity
@@ -37,6 +38,11 @@ public class Observation {
 	@Fetch
 	@RelatedTo(type = "OBSERVED", direction = Direction.INCOMING)
 	private Set<Observer> observers = new HashSet<>();
+
+	// Weird but conventional name
+	@Fetch
+	@RelatedToVia(type = "OBSERVED", direction = Direction.INCOMING)
+	private Set<Observed> observeds = new HashSet<>();
 
 	public Observation() {
 	}
@@ -107,6 +113,10 @@ public class Observation {
 
 	public void setObservers(Set<Observer> observers) {
 		this.observers = observers;
+	}
+
+	public void observedBy(Observer u, long date) {
+		observeds.add(new Observed(u, this, date));
 	}
 
 	@Override

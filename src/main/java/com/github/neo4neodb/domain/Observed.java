@@ -15,6 +15,9 @@ public class Observed {
 	private Observation observation;
 	private long date;
 
+	Observed() {
+	}
+	
 	Observed(Observer observer, Observation observation, long date) {
 		this.observer = observer;
 		this.observation = observation;

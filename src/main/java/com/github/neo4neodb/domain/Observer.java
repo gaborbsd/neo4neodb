@@ -21,20 +21,25 @@ public class Observer {
 
 	@Indexed(indexType = IndexType.UNIQUE, indexName = "observers")
 	private String name;
-	
+
 	// hashed by application layer
 	private String password;
-	
+
 	private String email;
-	
+
 	private boolean active;
-	
+
 	private String confirmationCode;
 
 	@Fetch
 	@RelatedTo(type = "OBSERVED", direction = Direction.OUTGOING)
 	private Set<Observation> observations = new HashSet<>();
-	
+
+	// Weird but conventional name
+	@Fetch
+	@RelatedToVia(type = "OBSERVED", direction = Direction.OUTGOING)
+	private Set<Observed> observeds = new HashSet<>();
+
 	public boolean activate(String confirmationCode) {
 		if (confirmationCode.equals(this.confirmationCode)) {
 			this.active = true;
@@ -43,7 +48,7 @@ public class Observer {
 		}
 		return false;
 	}
-	
+
 	public boolean resetPassword(String confirmationCode, String pass) {
 		if (confirmationCode.equals(this.confirmationCode)) {
 			this.confirmationCode = null;
@@ -52,8 +57,9 @@ public class Observer {
 		}
 		return false;
 	}
-	
-	public Observer(String name, String password, String email, String confirmationCode) {
+
+	public Observer(String name, String password, String email,
+			String confirmationCode) {
 		this.name = name;
 		this.password = password;
 		this.email = email;
@@ -106,7 +112,7 @@ public class Observer {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
@@ -137,6 +143,10 @@ public class Observer {
 
 	public void setObservations(Set<Observation> observations) {
 		this.observations = observations;
+	}
+
+	public void observed(Observation o, long date) {
+		observeds.add(new Observed(this, o, date));
 	}
 
 	@Override
