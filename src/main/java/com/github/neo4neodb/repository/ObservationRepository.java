@@ -14,15 +14,4 @@ public interface ObservationRepository extends GraphRepository<Observation> {
 			+ "ORDER BY r.date DESC")
 	Iterable<Observation> getSimilarEntries(Long rightAscension,
 			Double declination, Long date);
-
-	@Query("START o=node:observations('*:*'), u=node:observers('*:*') "
-			+ "WHERE u.id = {0} "
-			+ "AND o.id = {1} "
-			+ "CREATE (u-[:OBSERVED {date: {2}}]->o")
-	void confirmObservation(long uid, long oid, long date);
-
-	@Query("START u=node:observer('*:*') "
-			+ "WHERE u.id = {0} "
-			+ "CREATE u-[:OBSERVED {date: {2}}]->({1}))")
-	void createNewObservation(long id, Observation o, long date);
 }

@@ -1,10 +1,8 @@
 package com.github.neo4neodb.repository;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.Date;
-import java.util.Iterator;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +27,7 @@ import com.github.neo4neodb.domain.Observer;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
-public class ObservationRepositoryTest extends Neo4jConfiguration {
+public class ObservationRepositoryTest {
 
 	@Configuration
 	@ComponentScan("com.github.noe4neodb")
@@ -46,15 +44,31 @@ public class ObservationRepositoryTest extends Neo4jConfiguration {
 	@Autowired
 	private ObservationRepository observationRepository;
 
+	@Autowired
+	private ObserverRepository observerRepository;
+
 	private Observation o;
-	private Observer u;
+	private Observer user1;
+	private Observer user2;
 
 	@Before
-	public void setUp() throws Exception {
+	@Transactional
+	public void setUp() {
+		user1 = new Observer("Gabor");
+		observerRepository.save(user1);
+
+		user2 = new Observer("Hatim");
+		observerRepository.save(user2);
+
 		o = new Observation(10000, 25.5, 20.5, MagnitudeBand.V);
-		u = new Observer("Gabor");
-		u.observed(o, new Date().getTime());
+		o.observedBy(user1, new Date().getTime());
 		observationRepository.save(o);
+	}
+
+	@Test
+	public void testFindOne() {
+		Observation o2 = observationRepository.findOne(o.getId());
+		assertEquals(o, o2);
 	}
 
 	@Test
@@ -62,10 +76,34 @@ public class ObservationRepositoryTest extends Neo4jConfiguration {
 	public void testGetSimilarEntries() {
 		boolean ok = false;
 		Iterable<Observation> results = observationRepository
-				.getSimilarEntries(10001, 25.4, new Date().getTime());
-		for (Iterator<Observation> it = results.iterator(); it.hasNext();)
-			if (o.equals(it.hasNext()))
+				.getSimilarEntries(10000l, 25.5, new Date().getTime());
+		for (Observation t : results) {
+			if (t.equals(o)) {
 				ok = true;
+			}
+		}
 		assertTrue(ok);
+	}
+
+	@Test
+	@Transactional
+	public void testNewObserverForExistingObservation() {
+		o.observedBy(user2, new Date().getTime());
+		observationRepository.save(o);
+//		user2.observed(o, new Date().getTime());
+//		observerRepository.save(user2);
+		Observation tmp = observationRepository.findOne(o.getId());
+		assertTrue(tmp.getObservers().contains(user2));
+	}
+
+	@Test
+	@Transactional
+	public void testCreateNewObservation() {
+		Observation newObservation = new Observation(20000, 30.5, 10.5,
+				MagnitudeBand.V);
+		newObservation.observedBy(user2, new Date().getTime());
+		observationRepository.save(newObservation);
+		Observer tmp = observerRepository.findOne(user2.getId());
+		assertTrue(tmp.getObservations().contains(newObservation));
 	}
 }
