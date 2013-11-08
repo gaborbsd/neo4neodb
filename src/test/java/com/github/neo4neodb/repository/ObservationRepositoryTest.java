@@ -47,7 +47,7 @@ public class ObservationRepositoryTest {
 	@Autowired
 	private ObserverRepository observerRepository;
 
-	private Observation o;
+	private Observation observation1;
 	private Observer user1;
 	private Observer user2;
 
@@ -60,15 +60,19 @@ public class ObservationRepositoryTest {
 		user2 = new Observer("Hatim");
 		observerRepository.save(user2);
 
-		o = new Observation(10000, 25.5, 20.5, MagnitudeBand.V);
-		o.observedBy(user1, new Date().getTime());
-		observationRepository.save(o);
+		observation1 = new Observation(10000, 25.5, 20.5, MagnitudeBand.V);
+		observation1.observedBy(user1, new Date().getTime());
+		observationRepository.save(observation1);
+		observationRepository.save(new Observation(20000, 25.5, 20.5,
+				MagnitudeBand.V));
+		observationRepository.save(new Observation(40000, 25.5, 20.5,
+				MagnitudeBand.V));
 	}
 
 	@Test
 	public void testFindOne() {
-		Observation o2 = observationRepository.findOne(o.getId());
-		assertEquals(o, o2);
+		Observation o2 = observationRepository.findOne(observation1.getId());
+		assertEquals(observation1, o2);
 	}
 
 	@Test
@@ -78,7 +82,7 @@ public class ObservationRepositoryTest {
 		Iterable<Observation> results = observationRepository
 				.getSimilarEntries(10000l, 25.5, new Date().getTime());
 		for (Observation t : results) {
-			if (t.equals(o)) {
+			if (t.equals(observation1)) {
 				ok = true;
 			}
 		}
@@ -88,12 +92,11 @@ public class ObservationRepositoryTest {
 	@Test
 	@Transactional
 	public void testNewObserverForExistingObservation() {
-		o.observedBy(user2, new Date().getTime());
-		observationRepository.save(o);
-//		user2.observed(o, new Date().getTime());
-//		observerRepository.save(user2);
-		Observation tmp = observationRepository.findOne(o.getId());
-		assertTrue(tmp.getObservers().contains(user2));
+		Observation o1 = observationRepository.findOne(observation1.getId());
+		o1.observedBy(user2, new Date().getTime());
+		observationRepository.save(o1);
+		Observation o2 = observationRepository.findOne(observation1.getId());
+		assertTrue(o2.getObservers().contains(user2));
 	}
 
 	@Test
