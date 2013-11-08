@@ -6,11 +6,13 @@ import org.springframework.data.neo4j.repository.GraphRepository;
 import com.github.neo4neodb.domain.Observation;
 
 public interface ObservationRepository extends GraphRepository<Observation> {
-	@Query("START o=node:observations('*:*') "
+	@Query("START o=node(*) "
 			+ "MATCH (u)-[r:OBSERVED]->(o) "
-			+ "WHERE {0} * 0.95 < o.ra AND o.ra < {0} * 1.05 "
-			+ "AND {1} - 1 < o.dec AND o.dec < {1} + 1 "
-			+ "AND r.date > {2} - 172800000 " + "RETURN o, r.date "
+			+ "WHERE has(o.__type__) AND o.__type__ = 'Observation' "			
+			+ "AND ({0} * 0.95) < o.rightAscension AND o.rightAscension < ({0} * 1.05) "
+			+ "AND ({1} - 1) < o.declination AND o.declination < ({1} + 1) "
+			+ "AND r.date > {2} - 172800000 "
+			+ "RETURN o "
 			+ "ORDER BY r.date DESC")
 	Iterable<Observation> getSimilarEntries(Long rightAscension,
 			Double declination, Long date);
