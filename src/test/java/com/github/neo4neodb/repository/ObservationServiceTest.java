@@ -3,6 +3,7 @@ package com.github.neo4neodb.repository;
 import static org.junit.Assert.*;
 
 import java.util.Date;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,10 +28,10 @@ import com.github.neo4neodb.domain.Observer;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
-public class ObservationRepositoryTest {
+public class ObservationServiceTest {
 
 	@Configuration
-	@ComponentScan("com.github.noe4neodb")
+	@ComponentScan("com.github.neo4neodb.repository")
 	@EnableNeo4jRepositories("com.github.neo4neodb.repository")
 	@EnableTransactionManagement(mode = AdviceMode.PROXY)
 	static class Config extends Neo4jConfiguration {
@@ -46,6 +47,9 @@ public class ObservationRepositoryTest {
 
 	@Autowired
 	private ObserverRepository observerRepository;
+
+	@Autowired
+	private ObservationService service;
 
 	private Observation observation1;
 	private Observer user1;
@@ -70,22 +74,21 @@ public class ObservationRepositoryTest {
 	}
 
 	@Test
-	public void testFindOne() {
+	@Transactional
+	public void testAddObserverForExistingObservation() {
+		service.addObserverForExistingObservation(observation1, user2);
 		Observation o2 = observationRepository.findOne(observation1.getId());
-		assertEquals(observation1, o2);
+		assertTrue(o2.getObservers().contains(user2));
 	}
 
 	@Test
 	@Transactional
-	public void testGetSimilarEntries() {
-		boolean ok = false;
-		Iterable<Observation> results = observationRepository
-				.getSimilarEntries(10000l, 25.5, new Date().getTime());
-		for (Observation t : results) {
-			if (t.equals(observation1)) {
-				ok = true;
-			}
-		}
-		assertTrue(ok);
+	public void testNewObservationForObserver() {
+		Observation newObservation = new Observation(20000, 30.5, 10.5,
+				MagnitudeBand.V);
+		service.newObservationForObserver(newObservation, user2);
+		Observer tmp = observerRepository.findOne(user2.getId());
+		assertTrue(tmp.getObservations().contains(newObservation));
 	}
+
 }

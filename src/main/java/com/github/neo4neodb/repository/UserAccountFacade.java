@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.github.neo4neodb.domain.Observer;
 
-@Component
+//@Component
 public class UserAccountFacade {
 
 	private static final String REGISTRATION_MSG = "Dear {0},\n\nthank you for your "
