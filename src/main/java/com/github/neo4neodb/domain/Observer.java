@@ -40,6 +40,8 @@ public class Observer {
 	@RelatedToVia(type = "OBSERVED", direction = Direction.OUTGOING)
 	private Set<Observed> observeds = new HashSet<>();
 
+	private boolean softDeleted;
+
 	public boolean activate(String confirmationCode) {
 		if (confirmationCode.equals(this.confirmationCode)) {
 			this.active = true;
@@ -81,8 +83,6 @@ public class Observer {
 		this.softDeleted = softDeleted;
 	}
 
-	private boolean softDeleted;
-
 	@RelatedTo(type = "FRIENDS_WITH", direction = Direction.INCOMING)
 	private Set<Observer> friends;
 
@@ -123,6 +123,10 @@ public class Observer {
 
 	public boolean isActive() {
 		return active;
+	}
+
+	public String getConfirmationCode() {
+		return confirmationCode;
 	}
 
 	public void setConfirmationCode(String confirmationCode) {
