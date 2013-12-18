@@ -5,15 +5,17 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.text.MessageFormat;
+import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Component;
 
+import com.github.neo4neodb.domain.Observation;
 import com.github.neo4neodb.domain.Observer;
 
-//@Component
+@Component
 public class ObserverService {
 
 	private static final String REGISTRATION_MSG = "Dear {0},\n\nthank you for your "
@@ -52,32 +54,47 @@ public class ObserverService {
 		return new String(digest.digest(pass.getBytes()));
 	}
 
-	public void register(String name, String pass, String email) {
+	public Observer findOne(Long id) {
+		return repo.findOne(id);
+	}
+
+	public Iterable<Observer> findBySoftDeleted(boolean isSoftDeleted) {
+		return repo.findBySoftDeleted(isSoftDeleted);
+	}
+
+	public Observer save(Observer observer) {
+		return repo.save(observer);
+	}
+
+	public void register(Observer observer) {
 		String confirmationCode = genConfirmationCode();
-		Observer o = new Observer(name, hash(pass), email, confirmationCode);
-		repo.save(o);
+		observer.setConfirmationCode(confirmationCode);
+		observer.setFriends(new HashSet<Observer>());
+		observer.setObservations(new HashSet<Observation>());
+		observer.setSoftDeleted(false);
+		repo.save(observer);
 		SimpleMailMessage msg = new SimpleMailMessage();
 		msg.setFrom("noreply@neo4neodb.com");
-		msg.setTo(email);
+		msg.setTo(observer.getEmail());
 		msg.setSubject(REGISTRATION_SUBJ);
-		msg.setText(MessageFormat.format(REGISTRATION_MSG, name,
+		msg.setText(MessageFormat.format(REGISTRATION_MSG, observer.getName(),
 				confirmationCode));
 		mailSender.send(msg);
 	}
 
-	public boolean activate(long uid, String confirmationCode) {
-		Observer o = repo.findOne(uid);
+	public boolean activate(Observer observer) {
+		Observer o = repo.findOne(observer.getId());
 		if (o == null)
 			throw new IllegalArgumentException("User does not exist with "
 					+ "the specified id.");
-		if (o.activate(confirmationCode)) {
+		if (o.activate(observer.getConfirmationCode())) {
 			repo.save(o);
 			return true;
 		}
 		return false;
 	}
 
-	public void requestPassword(long uid) {
+	public void resetPassword(long uid) {
 		Observer o = repo.findOne(uid);
 		if (o == null)
 			throw new IllegalArgumentException("User does not exist with "
@@ -94,12 +111,13 @@ public class ObserverService {
 		mailSender.send(msg);
 	}
 
-	public boolean resetPassword(long uid, String confirmationCode, String pass) {
-		Observer o = repo.findOne(uid);
+	public boolean changePassword(Observer observer) {
+		Observer o = repo.findOne(observer.getId());
 		if (o == null)
 			throw new IllegalArgumentException("User does not exist with "
 					+ "the specified id.");
-		if (o.resetPassword(confirmationCode, hash(pass))) {
+		if (o.resetPassword(observer.getConfirmationCode(),
+				hash(observer.getPassword()))) {
 			repo.save(o);
 			return true;
 		}
