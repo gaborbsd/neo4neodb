@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import com.github.neo4neodb.domain.Observer;
 
 //@Component
-public class UserAccountFacade {
+public class ObserverService {
 
 	private static final String REGISTRATION_MSG = "Dear {0},\n\nthank you for your "
 			+ "registration on Neo4NeoDB. To log in, first you have to activate "
