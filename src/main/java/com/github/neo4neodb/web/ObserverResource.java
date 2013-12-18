@@ -1,37 +1,101 @@
 package com.github.neo4neodb.web;
 
 
-import com.github.neo4neodb.domain.Observer;
+import java.util.Set;
+
 import org.springframework.hateoas.ResourceSupport;
 
+import com.github.neo4neodb.domain.Observation;
+
 public class ObserverResource extends ResourceSupport {
-    private long observerId;
-    private String observerName;
+	private Long observerId;
+	private String name;
+	private String password;
+	private String email;
+	private boolean active;
+	private String confirmationCode;
+	private Set<Observation> observations;
+	private boolean softDeleted;
 
     public ObserverResource(){
 
     }
 
-    public ObserverResource(long observerId, String observerName) {
-        this.observerId = observerId;
-        this.observerName = observerName;
-    }
+	ObserverResource(Long observerId, String name, String password,
+			String email, boolean active, String confirmationCode,
+			Set<Observation> observations, boolean softDeleted) {
+		super();
+		this.observerId = observerId;
+		this.name = name;
+		this.password = password;
+		this.email = email;
+		this.active = active;
+		this.confirmationCode = confirmationCode;
+		this.observations = observations;
+		this.softDeleted = softDeleted;
+	}
 
-    public long getObserverId() {
-        return observerId;
-    }
+	public Long getObserverId() {
+		return observerId;
+	}
 
-    public void setObserverId(long observerId) {
-        this.observerId = observerId;
-    }
+	public void setObserverId(Long observerId) {
+		this.observerId = observerId;
+	}
 
-    public String getObserverName() {
-        return observerName;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setObserverName(String observerName) {
-        this.observerName = observerName;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
+	public String getPassword() {
+		return password;
+	}
 
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public String getConfirmationCode() {
+		return confirmationCode;
+	}
+
+	public void setConfirmationCode(String confirmationCode) {
+		this.confirmationCode = confirmationCode;
+	}
+
+	public Set<Observation> getObservations() {
+		return observations;
+	}
+
+	public void setObservations(Set<Observation> observations) {
+		this.observations = observations;
+	}
+
+	public boolean isSoftDeleted() {
+		return softDeleted;
+	}
+
+	public void setSoftDeleted(boolean softDeleted) {
+		this.softDeleted = softDeleted;
+	}
 }
