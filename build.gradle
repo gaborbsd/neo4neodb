@@ -14,7 +14,7 @@ ext.neo4jVersion                = '2.0.0'
 ext.springSecurityVersion       = '3.2.0.RELEASE'
 
 ext.sdCommonsVersion		= '1.6.2.RELEASE'
-ext.sdNeo4jVersion 		= '2.4.0.BUILD-SNAPSHOT'
+ext.sdNeo4jVersion 		= '3.0.0.M1'
 ext.sdRestVersion 		= '2.0.0.M1'
 ext.springHateoasVersion	= '0.8.0.BUILD-SNAPSHOT'
 
@@ -29,7 +29,7 @@ repositories {
     maven { url "http://repo.spring.io/libs-snapshot" }
     maven { url "http://repo.spring.io/snapshot" }
     maven { url "http://repo.spring.io/milestone" }
-    maven { url "http://m2.neo4j.org/" }
+    maven { url "http://m2.neo4j.org/content/repositories/releases/" }
 
 
 }
