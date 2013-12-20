@@ -62,6 +62,10 @@ public class ObserverService {
 		return repo.findBySoftDeleted(isSoftDeleted);
 	}
 
+	public Observer findByEmail(String email) {
+		return repo.findByEmail(email);
+	}
+
 	public Observer save(Observer observer) {
 		return repo.save(observer);
 	}

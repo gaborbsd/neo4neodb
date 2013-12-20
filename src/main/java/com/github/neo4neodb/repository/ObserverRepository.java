@@ -8,4 +8,5 @@ import com.github.neo4neodb.domain.Observer;
 
 public interface ObserverRepository extends GraphRepository<Observer> {
     List<Observer> findBySoftDeleted(boolean isSoftDeletd);
+    Observer findByEmail(String email);
 }

@@ -19,12 +19,12 @@ public class Observer {
 	@GraphId
 	private Long id;
 
-	@Indexed(indexType = IndexType.UNIQUE, indexName = "observers")
 	private String name;
 
 	// hashed by application layer
 	private String password;
 
+	@Indexed(indexType = IndexType.UNIQUE, indexName = "observers")
 	private String email;
 
 	private boolean active;
