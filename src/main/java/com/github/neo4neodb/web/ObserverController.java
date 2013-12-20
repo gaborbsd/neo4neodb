@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -66,8 +67,15 @@ public class ObserverController {
 	@RequestMapping(method = RequestMethod.PUT, value = "/{observerId}")
 	ResponseEntity<ObserverResource> updateObserver(
 			@PathVariable Long observerId, @RequestBody Observer body) {
-		// XXX: auth check; only allowed if the same user is logged in
+		String email = SecurityContextHolder.getContext().getAuthentication()
+				.getName();
+		if (email == null) {
+			throw new SecurityException("Unathenticated");
+		}
 		Observer observer = observerService.findOne(observerId);
+		if (!observer.getEmail().equals(email)) {
+			throw new SecurityException("Forbidden");
+		}
 		observer.setName(body.getName());
 		observer.setEmail(body.getEmail());
 		observer.setPassword(ObserverService.hash(body.getPassword()));
