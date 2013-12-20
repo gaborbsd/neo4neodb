@@ -11,6 +11,7 @@ ext.velocityVersion 		= '1.7'
 
 ext.springVersion               = '4.0.0.RELEASE'
 ext.neo4jVersion                = '2.0.0'
+ext.neo4jJdbcVersion            = '2.0.0-M06'
 ext.springSecurityVersion       = '3.2.0.RELEASE'
 
 ext.sdCommonsVersion		= '1.6.2.RELEASE'
@@ -29,9 +30,9 @@ repositories {
     maven { url "http://repo.spring.io/libs-snapshot" }
     maven { url "http://repo.spring.io/snapshot" }
     maven { url "http://repo.spring.io/milestone" }
-    maven { url "http://m2.neo4j.org/content/repositories/releases/" }
-
-
+    maven { url "http://m2.neo4j.org/releases/" }
+    maven { url "http://m2.neo4j.org/snapshots" }
+    maven { url "http://maven.restlet.org" }
 }
 
 
@@ -63,9 +64,11 @@ dependencies {
             "org.springframework.data:spring-data-rest-webmvc:$sdRestVersion",
             "org.springframework.data:spring-data-commons:$sdCommonsVersion",
             "org.springframework.security:spring-security-config:$springSecurityVersion",
+            "org.springframework.security:spring-security-web:$springSecurityVersion",
             "org.springframework.hateoas:spring-hateoas:$springHateoasVersion",
             "org.neo4j:neo4j:$neo4jVersion",
             "org.neo4j:server-api:$neo4jVersion",
+            "org.neo4j:neo4j-jdbc:$neo4jJdbcVersion",
             "org.hibernate:hibernate-validator:$hibernateValidatorVersion",
             "org.apache.velocity:velocity:$velocityVersion",
             "junit:junit:$junitVersion"
