@@ -25,21 +25,21 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableNeo4jRepositories("com.github.neo4neodb.repository")
 @EnableTransactionManagement(mode = AdviceMode.PROXY)
 @ImportResource("/WEB-INF/spring-security.xml")
-@PropertySource(name = "mailsender", value = "classpath:mailsender.properties")
+@PropertySource("classpath:mailsender.properties")
 public class Neo4jConfig extends Neo4jConfiguration {
 	private static final String connectionUrl = "http://localhost:7474/db/data";
 
-	@Value("${mailsender.smtp-server}")
+	@Value("${smtp-server}")
 	private String smtpServer;
-	@Value("${mailsender.smtp-port}")
+	@Value("${smtp-port}")
 	private String smtpPort;
-	@Value("${mailsender.smtp-username}")
+	@Value("${smtp-username}")
 	private String smtpUser;
-	@Value("${mailsender.smtp-password}")
+	@Value("${smtp-password}")
 	private String smtpPassword;
-	@Value("${mailsender.smtp-auth}")
+	@Value("${smtp-auth}")
 	private String smtpAuth;
-	@Value("${mailsender.smtp-tls}")
+	@Value("${smtp-tls}")
 	private String smtpStartTls;
 
 	@Bean(name = "graphDatabaseService")
@@ -49,19 +49,20 @@ public class Neo4jConfig extends Neo4jConfiguration {
 		return sgdb;
 	}
 
-	@Bean
-	public DelegatingGraphDatabase delegatingGraphDatabase(
-			GraphDatabaseService graphDatabaseService) {
-		return new DelegatingGraphDatabase(graphDatabaseService);
-	}
+	// @Bean
+	// public DelegatingGraphDatabase delegatingGraphDatabase(
+	// GraphDatabaseService graphDatabaseService) {
+	// return new DelegatingGraphDatabase(graphDatabaseService);
+	// }
 
 	@Bean
 	public TypeRepresentationStrategyFactory typeRepresentationStrategyFactory(
-			DelegatingGraphDatabase delegatingGraphDatabase) {
-		return new TypeRepresentationStrategyFactory(delegatingGraphDatabase,
+			SpringRestGraphDatabase springRestGraphDatabase) {
+		return new TypeRepresentationStrategyFactory(springRestGraphDatabase,
 				TypeRepresentationStrategyFactory.Strategy.Labeled);
 	}
 
+	@Bean
 	public DriverManagerDataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("org.neo4j.jdbc.Driver");
@@ -73,7 +74,7 @@ public class Neo4jConfig extends Neo4jConfiguration {
 	public MailSender mailSender() {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 		mailSender.setHost(smtpServer);
-		mailSender.setPort(Integer.parseInt(smtpPort));
+		mailSender.setPort(587);
 		mailSender.setUsername(smtpUser);
 		mailSender.setPassword(smtpPassword);
 		Properties javaMailProps = new Properties();

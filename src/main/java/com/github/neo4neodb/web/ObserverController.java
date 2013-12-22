@@ -54,6 +54,15 @@ public class ObserverController {
 		return new ResponseEntity<ObserverResource>(resource,
 				HttpStatus.CREATED);
 	}
+	
+	@RequestMapping(value = "/example", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<ObserverResource> example() {
+		Observer observer = new Observer("test", "test", "test@test.test", "asd");
+		observer.activate("asd");
+		ObserverResource resource = observerResourceAssembler.instantiateResource(observer);
+		return new ResponseEntity<ObserverResource>(resource, HttpStatus.OK);
+	}
 
 	@RequestMapping(value = "/{observerId}", method = RequestMethod.GET)
 	@ResponseBody

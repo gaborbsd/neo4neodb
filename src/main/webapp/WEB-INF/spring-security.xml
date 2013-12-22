@@ -6,7 +6,9 @@
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
     <http use-expressions="true">
-      <intercept-url pattern="/**" access="isAuthenticated()"/>
+      <intercept-url method="DELETE" pattern="/**" access="ROLE_USER"/>
+<!--       <intercept-url method="PUT" pattern="/**" access="ROLE_USER"/> -->
+<!--       <intercept-url method="POST" pattern="/observations" access="ROLE_USER"/> -->
       <http-basic/>
     </http>
 
