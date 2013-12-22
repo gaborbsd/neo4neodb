@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan("com.github.noe4neodb")
 @EnableNeo4jRepositories("com.github.neo4neodb.repository")
 @EnableTransactionManagement(mode = AdviceMode.PROXY)
-@ImportResource("classpath:WEB-INF/spring-security.xml")
+@ImportResource("/WEB-INF/spring-security.xml")
 @PropertySource(name = "mailsender", value = "classpath:mailsender.properties")
 public class Neo4jConfig extends Neo4jConfiguration {
 	private static final String connectionUrl = "http://localhost:7474/db/data";
