@@ -32,7 +32,7 @@ public class Neo4jConfig extends Neo4jConfiguration {
 	@Value("${mailsender.smtp-server}")
 	private String smtpServer;
 	@Value("${mailsender.smtp-port}")
-	private int smtpPort;
+	private String smtpPort;
 	@Value("${mailsender.smtp-username}")
 	private String smtpUser;
 	@Value("${mailsender.smtp-password}")
@@ -73,7 +73,7 @@ public class Neo4jConfig extends Neo4jConfiguration {
 	public MailSender mailSender() {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 		mailSender.setHost(smtpServer);
-		mailSender.setPort(smtpPort);
+		mailSender.setPort(Integer.parseInt(smtpPort));
 		mailSender.setUsername(smtpUser);
 		mailSender.setPassword(smtpPassword);
 		Properties javaMailProps = new Properties();
