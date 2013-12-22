@@ -8,6 +8,7 @@ ext.servletApiVersion 		= '3.0.1'
 ext.hibernateValidatorVersion 	= '5.0.1.Final'
 ext.groovyVersion 		= '2.2.1'
 ext.velocityVersion 		= '1.7'
+ext.jerseyVersion           = '1.18'
 
 ext.springVersion               = '4.0.0.RELEASE'
 ext.neo4jVersion                = '2.0.0'
@@ -66,6 +67,7 @@ dependencies {
             "org.springframework.security:spring-security-config:$springSecurityVersion",
             "org.springframework.security:spring-security-web:$springSecurityVersion",
             "org.springframework.hateoas:spring-hateoas:$springHateoasVersion",
+            "com.sun.jersey:jersey-core:$jerseyVersion",
             "org.neo4j:neo4j:$neo4jVersion",
             "org.neo4j:server-api:$neo4jVersion",
             "org.neo4j:neo4j-jdbc:$neo4jJdbcVersion",
